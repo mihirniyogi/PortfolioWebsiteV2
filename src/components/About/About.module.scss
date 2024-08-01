@@ -32,21 +32,25 @@
   .header-line {
     margin: 0 0 0 20px;
     height: 3px;
-    width: 0%;
+    width: 100%;
     background-color: var(--faded-golden);
     border-radius: 20px;
-    transition: width 0.8s cubic-bezier(0.42, 0, 0.58, 1); /* Smoother cubic-bezier easing */
-    animation: animateHeaderLine 1.2s forwards; /* Animation duration and fill mode */
-    animation-delay: 0.5s; /* Delay animation start by 0.5 seconds */
+    transform: scaleX(0);
+  }
 
-    @keyframes animateHeaderLine {
-      from {
-        width: 1%; /* Start with no width */
-      }
-      to {
-        width: 100%; /* Expand to full width */
-      }
+  @keyframes expand {
+    from {
+      transform: scaleX(0);
+      transform-origin: left;
     }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .header-line.animation {
+    animation: expand 1.2s forwards;
+    animation-delay: 0.25s;
   }
 }
 

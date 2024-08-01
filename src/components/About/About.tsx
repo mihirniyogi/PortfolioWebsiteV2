@@ -1,6 +1,26 @@
+import { useEffect } from "react";
 import styles from "./About.module.scss";
 
 const About = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(styles["animation"]);
+        }
+      });
+    });
+
+    const headerLine = document.querySelector(`.${styles["header-line"]}`);
+
+    if (headerLine) observer.observe(headerLine);
+
+    // cleanup
+    return () => {
+      if (headerLine) observer.unobserve(headerLine);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       {/* header */}
