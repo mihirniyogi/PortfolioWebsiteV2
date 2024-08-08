@@ -1,33 +1,26 @@
-import { useEffect } from "react";
 import styles from "./Projects.module.scss";
+import useAnimateUponView from "../../hooks/useAnimateUponView";
+// import axios from "axios";
 
 const Projects = () => {
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add(styles["animation"]);
-        }
-      });
-    });
+  // animate lines once they are in view
+  useAnimateUponView(styles["header-line-left"], styles["animation"]);
+  useAnimateUponView(styles["header-line-right"], styles["animation"]);
 
-    const headerLineLeft = document.querySelector(
-      `.${styles["header-line-left"]}`
-    );
-
-    const headerLineRight = document.querySelector(
-      `.${styles["header-line-right"]}`
-    );
-
-    if (headerLineLeft) observer.observe(headerLineLeft);
-    if (headerLineRight) observer.observe(headerLineRight);
-
-    // cleanup
-    return () => {
-      if (headerLineLeft) observer.unobserve(headerLineLeft);
-      if (headerLineRight) observer.unobserve(headerLineRight);
-    };
-  }, []);
+  // // useEffect...to fetch from CMS
+  // useEffect(() => {
+  //   const token = import.meta.env.VITE_STRAPI_API_TOKEN;
+  //   const options = {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`, // Include the token in the headers
+  //     },
+  //   };
+  //   const response = axios
+  //     .get("http://192.168.0.4:1337/api/projects", options)
+  //     .then((res) => res.data)
+  //     .catch((err) => console.error(err));
+  //   console.log(response);
+  // }, []);
 
   return (
     <div className={styles.container}>

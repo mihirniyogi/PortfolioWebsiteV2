@@ -1,25 +1,10 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import useAnimateUponView from "../../hooks/useAnimateUponView";
 import styles from "./About.module.scss";
 
 const About = () => {
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add(styles["animation"]);
-        }
-      });
-    });
-
-    const headerLine = document.querySelector(`.${styles["header-line"]}`);
-
-    if (headerLine) observer.observe(headerLine);
-
-    // cleanup
-    return () => {
-      if (headerLine) observer.unobserve(headerLine);
-    };
-  }, []);
+  // animate lines once they are in view
+  useAnimateUponView(styles["header-line"], styles["animation"]);
 
   return (
     <div className={styles.container}>
