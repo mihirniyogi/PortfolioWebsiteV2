@@ -40,7 +40,7 @@ const Projects = () => {
           title: item.attributes["Title"],
           description: item.attributes["Description"],
           image: item.attributes["image"]?.data?.attributes?.url
-            ? `http://192.168.0.4:1337${item.attributes["image"].data.attributes.url}`
+            ? `${apiUrl}${item.attributes["image"].data.attributes.url}`
             : "default.jpg",
           githubLink: item.attributes["githubLink"],
           liveLink: item.attributes["liveLink"],
