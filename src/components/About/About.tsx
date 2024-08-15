@@ -1,10 +1,41 @@
 // import { useEffect } from "react";
+import axios from "axios";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
 import styles from "./About.module.scss";
+import { useEffect, useState } from "react";
+import parseDescription, { Paragraph } from "./parseDescription";
 
 const About = () => {
   // animate lines once they are in view
   useAnimateUponView(styles["header-line"], styles["animation"]);
+
+  const [description, setDescription] = useState<Paragraph[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const token = import.meta.env.VITE_STRAPI_API_TOKEN;
+        const options = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the headers
+          },
+        };
+        const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
+        const response = await axios
+          .get(`${apiUrl}/api/about`, options)
+          .then((res) => res.data)
+          .catch((err) => console.error(err));
+
+        setDescription(response.data.attributes.description);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const parsed = parseDescription(description);
 
   return (
     <div className={styles.container}>
@@ -20,25 +51,7 @@ const About = () => {
       {/* content */}
       <div className={styles["content"]}>
         {/* text */}
-        <div className={styles["text"]}>
-          <p>Hi! I am a Year 2 Student @ NUS Computer Science.</p>
-          <p>
-            I love <span className={styles.highlight}>problem-solving</span> and
-            enjoy the challenge of building things from scratch. My passion for
-            tech started back in secondary school when I first developed a
-            simple game, and it has only grown since.
-          </p>
-          <p>
-            Right now, I'm diving deep into{" "}
-            <span className={styles.highlight}>web development</span>,
-            experimenting with React, Next.js, Express, SQL, and Firebase.
-          </p>
-          <p>
-            In my spare time, I enjoy tinkering with networks, playing
-            badminton, reading fiction novels, exploring up and coming
-            technologies, and helping out my family.
-          </p>
-        </div>
+        <div className={styles["text"]}>{parsed}</div>
 
         {/* space */}
         <div className={styles["space"]}></div>
