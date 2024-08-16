@@ -41,7 +41,7 @@ const Projects = () => {
           description: item.attributes["Description"],
           image: item.attributes["image"]?.data?.attributes?.url
             ? `${apiUrl}${item.attributes["image"].data.attributes.url}`
-            : "default.jpg",
+            : "default.png",
           githubLink: item.attributes["githubLink"],
           liveLink: item.attributes["liveLink"],
           technologies: item.attributes["technologies"],

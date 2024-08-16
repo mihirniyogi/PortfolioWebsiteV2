@@ -69,7 +69,7 @@ const FeaturedCard = ({
         </div>
         {/* links + tech */}
         <div className={`${styles["info_row"]} ${styles["right"]}`}>
-          <div className={styles["tech"]}>
+          <div className={`${styles["tech"]} ${styles["right"]}`}>
             {technologies.map((tech, index) => (
               <span key={index}>{tech}</span>
             ))}
