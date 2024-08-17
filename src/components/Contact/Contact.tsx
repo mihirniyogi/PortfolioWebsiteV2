@@ -83,6 +83,7 @@ const Contact = () => {
             data-netlify="true"
             className={styles["form"]}
           >
+            <input type="hidden" name="form-name" value="contact"></input>
             {/* email label+box */}
             <div className={styles["field"]}>
               <label htmlFor="email">email</label>
