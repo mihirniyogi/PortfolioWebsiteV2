@@ -19,7 +19,6 @@ const FeaturedComponent = () => {
 
   useEffect(() => {
     async function fetchData() {
-      // eslint-disable-next-line no-useless-catch
       try {
         const response = await fetchDataFromCMS("/api/projects?populate=*");
 
@@ -34,7 +33,6 @@ const FeaturedComponent = () => {
           liveLink: item.attributes["liveLink"],
           technologies: item.attributes["technologies"],
         }));
-
         setFeatured(projects);
       } catch (error) {
         throwError(error as Error);

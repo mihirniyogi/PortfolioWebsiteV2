@@ -1,4 +1,3 @@
-// FallbackMessage.jsx
 import styles from "./Fallback.module.scss";
 
 const Fallback = () => (

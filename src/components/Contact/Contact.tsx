@@ -2,37 +2,12 @@ import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
 import styles from "./Contact.module.scss";
-import TextComponent from "./TextComponent";
+import TextComponent from "./TextComponent/TextComponent";
 import { ErrorBoundary } from "react-error-boundary";
-import Fallback from "../../utils/Fallback";
+import Fallback from "../Fallback/Fallback";
 
 const Contact = () => {
   useAnimateUponView(styles["header-line"], styles["animation"]);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const token = import.meta.env.VITE_STRAPI_API_TOKEN;
-  //       const options = {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`, // Include the token in the headers
-  //         },
-  //       };
-  //       const apiUrl = import.meta.env.VITE_STRAPI_API_URL;
-  //       const response = await axios
-  //         .get(`${apiUrl}/api/about`, options)
-  //         .then((res) => res.data)
-  //         .catch((err) => console.error(err));
-
-  //       setDescription(response.data.attributes.description);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, []);
-
-  // const parsed = parseDescription(description);
 
   return (
     <div className={styles["container"]}>

@@ -1,6 +1,7 @@
-import styles from "./Contact.module.scss";
+import useAsyncError from "../../../hooks/useAsyncError";
+import fetchDataFromCMS from "../../../utils/fetchDataFromCMS";
+import styles from "./Text.module.scss";
 import { useEffect, useState } from "react";
-import fetchDataFromCMS from "../../utils/fetchDataFromCMS";
 
 // helper type
 type TextChild = {
@@ -18,19 +19,19 @@ type Paragraph = {
 // fetches data + parses data + returns JSX
 const TextComponent = () => {
   const [textArr, setTextArr] = useState<Paragraph[]>([]);
+  const throwError = useAsyncError();
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetchDataFromCMS("/api/contact");
-        setTextArr(response.data.attributes.text); //description
+        setTextArr(response.data.attributes.description);
       } catch (error) {
-        console.error(error);
-        setTextArr([]);
+        throwError(error as Error);
       }
     }
     fetchData();
-  }, []);
+  }, [throwError]);
 
   return textArr.map((block: Paragraph, index: number) => (
     <p key={index}>

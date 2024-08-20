@@ -1,4 +1,3 @@
-/* Fallback.module.scss */
 .container {
   display: flex;
   flex-direction: column;
@@ -6,11 +5,13 @@
 }
 
 .title {
+  font-family: "Poppins", sans-serif;
   font-size: 2rem;
   color: #ff6f6f;
 }
 
 .message {
+  font-family: "Fira Code", sans-serif;
   font-size: 1.2rem;
   color: var(--gray-text);
 }

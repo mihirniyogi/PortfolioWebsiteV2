@@ -2,7 +2,7 @@ import styles from "./Projects.module.scss";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
 import FeaturedComponent from "./FeaturedComponent";
 import { ErrorBoundary } from "react-error-boundary";
-import Fallback from "../../utils/Fallback";
+import Fallback from "../Fallback/Fallback";
 
 const Projects = () => {
   // animate lines once they are in view
