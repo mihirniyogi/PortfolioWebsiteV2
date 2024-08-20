@@ -1,6 +1,8 @@
 import styles from "./About.module.scss";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
-import DescriptionText from "./DescriptionText";
+import DescriptionComponent from "./DescriptionComponent/DescriptionComponent";
+import { ErrorBoundary } from "react-error-boundary";
+import Fallback from "../Fallback/Fallback";
 
 const About = () => {
   // animate lines once they are in view
@@ -21,7 +23,9 @@ const About = () => {
       <div className={styles["content"]}>
         {/* text */}
         <div className={styles["text"]}>
-          <DescriptionText />
+          <ErrorBoundary fallback={<Fallback />}>
+            <DescriptionComponent />
+          </ErrorBoundary>
         </div>
 
         {/* space */}

@@ -1,6 +1,8 @@
 import styles from "./Projects.module.scss";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
-import Featured from "./Featured";
+import FeaturedComponent from "./FeaturedComponent";
+import { ErrorBoundary } from "react-error-boundary";
+import Fallback from "../Fallback/Fallback";
 
 const Projects = () => {
   // animate lines once they are in view
@@ -21,7 +23,9 @@ const Projects = () => {
 
       {/* content */}
       <div className={styles["content"]}>
-        <Featured />
+        <ErrorBoundary fallback={<Fallback />}>
+          <FeaturedComponent />
+        </ErrorBoundary>
       </div>
     </div>
   );

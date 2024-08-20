@@ -1,7 +1,7 @@
-import styles from "./FeaturedCard.module.scss";
+import styles from "./FeatCard.module.scss";
 import { FaGithub, FaLink } from "react-icons/fa6";
 
-export type FeatureCardProps = {
+export type FeatCardProps = {
   title: string;
   description: string;
   image: string;
@@ -11,7 +11,7 @@ export type FeatureCardProps = {
   position: "left" | "right";
 };
 
-const FeaturedCard = ({
+const FeatCard = ({
   title,
   description,
   image,
@@ -19,7 +19,7 @@ const FeaturedCard = ({
   liveLink,
   technologies,
   position,
-}: FeatureCardProps) => {
+}: FeatCardProps) => {
   return position === "left" ? (
     <div className={styles["container"]}>
       {/* Text side */}
@@ -89,4 +89,4 @@ const FeaturedCard = ({
   );
 };
 
-export default FeaturedCard;
+export default FeatCard;
