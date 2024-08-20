@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FeatCard from "./Card/FeatCard";
 import fetchDataFromCMS from "../../utils/fetchDataFromCMS";
+import useAsyncError from "../../hooks/useAsyncError";
 
 type Project = {
   title: string;
@@ -14,6 +15,7 @@ type Project = {
 // fetches data + parses data + returns JSX
 const FeaturedComponent = () => {
   const [featured, setFeatured] = useState<Project[]>([]);
+  const throwError = useAsyncError();
 
   useEffect(() => {
     async function fetchData() {
@@ -35,12 +37,12 @@ const FeaturedComponent = () => {
 
         setFeatured(projects);
       } catch (error) {
-        throw error;
+        throwError(error as Error);
       }
     }
 
     fetchData();
-  }, []);
+  }, [throwError]);
 
   return featured.map((data, index) => (
     <FeatCard
