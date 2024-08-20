@@ -1,6 +1,6 @@
 import styles from "./About.module.scss";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
-import DescriptionText from "./DescriptionText";
+import DescriptionComponent from "./DescriptionComponent";
 
 const About = () => {
   // animate lines once they are in view
@@ -21,7 +21,7 @@ const About = () => {
       <div className={styles["content"]}>
         {/* text */}
         <div className={styles["text"]}>
-          <DescriptionText />
+          <DescriptionComponent />
         </div>
 
         {/* space */}

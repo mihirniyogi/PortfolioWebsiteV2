@@ -2,15 +2,12 @@ import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 import useAnimateUponView from "../../hooks/useAnimateUponView";
 import styles from "./Contact.module.scss";
-// import parseDescription, { Paragraph } from "./parseDescription";
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+import TextComponent from "./TextComponent";
+import { ErrorBoundary } from "react-error-boundary";
+import Fallback from "../../utils/Fallback";
 
 const Contact = () => {
   useAnimateUponView(styles["header-line"], styles["animation"]);
-
-  // const [description, setDescription] = useState<Paragraph[]>([]);
-
   // useEffect(() => {
   //   async function fetchData() {
   //     try {
@@ -51,12 +48,9 @@ const Contact = () => {
       {/* content */}
       <div className={styles["content"]}>
         <div className={styles["text_section"]}>
-          <p>
-            {
-              "Whether it’s a new project idea or just to say hi, drop me a message!"
-            }
-          </p>
-          <p>{"P.S. I’m always down for a good meal."}</p>
+          <ErrorBoundary fallback={<Fallback />}>
+            <TextComponent />
+          </ErrorBoundary>
 
           <div className={styles["iconrow"]}>
             <a href="https://www.instagram.com/me.here.942/">

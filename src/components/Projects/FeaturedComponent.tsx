@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import FeaturedCard from "./Card/FeaturedCard";
+import FeatCard from "./Card/FeatCard";
+import fetchDataFromCMS from "../../utils/fetchDataFromCMS";
 
 type Project = {
   title: string;
@@ -11,25 +11,17 @@ type Project = {
   technologies: string[];
 };
 
-const Featured = () => {
+// fetches data + parses data + returns JSX
+const FeaturedComponent = () => {
   const [featured, setFeatured] = useState<Project[]>([]);
 
-  // to fetch from CMS
   useEffect(() => {
     async function fetchData() {
+      // eslint-disable-next-line no-useless-catch
       try {
-        const TOKEN = import.meta.env.VITE_STRAPI_API_TOKEN;
-        const options = {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`, // Include the token in the headers
-          },
-        };
-        const BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
-        const response = await axios
-          .get(`${BASE_URL}/api/projects?populate=*`, options)
-          .then((res) => res.data)
-          .catch((err) => console.error(err));
+        const response = await fetchDataFromCMS("/api/projects?populate=*");
 
+        const BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
         const projects: Project[] = response.data.map((item: any) => ({
           title: item.attributes["Title"],
           description: item.attributes["Description"],
@@ -43,7 +35,7 @@ const Featured = () => {
 
         setFeatured(projects);
       } catch (error) {
-        console.error(error);
+        throw error;
       }
     }
 
@@ -51,7 +43,7 @@ const Featured = () => {
   }, []);
 
   return featured.map((data, index) => (
-    <FeaturedCard
+    <FeatCard
       key={index}
       title={data.title}
       description={data.description}
@@ -64,4 +56,4 @@ const Featured = () => {
   ));
 };
 
-export default Featured;
+export default FeaturedComponent;
