@@ -41,6 +41,7 @@ jobs:
       # deploy static files
       - name: Deploy Static Files
         run: |
+          sudo mkdir -p /var/www/portfolio-static-files
           sudo rm -rf /var/www/portfolio-static-files/*
           sudo cp -r dist/* /var/www/portfolio-static-files/
           sudo chown -R www-data:www-data /var/www/portfolio-static-files/
