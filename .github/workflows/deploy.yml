@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # checkout code
@@ -38,29 +38,11 @@ jobs:
       - name: Build
         run: yarn build
       
-      # upload build files to rpi
-      - name: Upload static files to RPi
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.RPI_HOST }}
-          username: ${{ secrets.RPI_USER }}
-          key: ${{ secrets.RPI_SSH_PRIVATE_KEY }}
-          source: "dist/*"
-          target: "/tmp/frontend-deploy"
-      
-      # move files to secure directory
-      - name: Move files to secure directory
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.RPI_HOST }}
-          username: ${{ secrets.RPI_USER }}
-          key: ${{ secrets.RPI_SSH_PRIVATE_KEY }}
-          script: |
-            sudo rm -rf /var/www/portfolio-static-files/*
-            sudo mv /tmp/frontend-deploy/* /var/www/portfolio-static-files/
-            sudo chown -R www-data:www-data /var/www/portfolio-static-files/
-            sudo nginx -s reload
-
-
-      
+      # deploy static files
+      - name: Deploy Static Files
+        run: |
+          sudo rm -rf /var/www/portfolio-static-files/*
+          sudo cp -r dist/* /var/www/portfolio-static-files/
+          sudo chown -R www-data:www-data /var/www/portfolio-static-files/
+          sudo nginx -s reload
       
