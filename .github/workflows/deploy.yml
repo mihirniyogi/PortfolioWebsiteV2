@@ -1,0 +1,66 @@
+name: Deploy Frontend to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # set up node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      # install yarn
+      - name: Install Yarn
+        run: npm install -g yarn@1.22.21
+
+      # install dependencies
+      - name: Install dependencies
+        run: yarn install
+      
+      # prepare env variables
+      - name: Prepare Environment Variables
+        run: |
+          echo "VITE_STRAPI_API_TOKEN=${{ secrets.VITE_STRAPI_API_TOKEN }}" > .env
+          echo "VITE_STRAPI_API_URL=${{ secrets.VITE_STRAPI_API_URL }}" >> .env
+      
+      # build
+      - name: Build
+        run: yarn build
+      
+      # upload build files to rpi
+      - name: Upload static files to RPi
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.RPI_HOST }}
+          username: ${{ secrets.RPI_USER }}
+          key: ${{ secrets.RPI_SSH_PRIVATE_KEY }}
+          source: "dist/*"
+          target: "/tmp/frontend-deploy"
+      
+      # move files to secure directory
+      - name: Move files to secure directory
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.RPI_HOST }}
+          username: ${{ secrets.RPI_USER }}
+          key: ${{ secrets.RPI_SSH_PRIVATE_KEY }}
+          script: |
+            sudo rm -rf /var/www/portfolio-static-files/*
+            sudo mv /tmp/frontend-deploy/* /var/www/portfolio-static-files/
+            sudo chown -R www-data:www-data /var/www/portfolio-static-files/
+            sudo nginx -s reload
+
+
+      
+      
