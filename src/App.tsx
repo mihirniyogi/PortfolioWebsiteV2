@@ -1,4 +1,5 @@
 import "./App.scss";
+import About from "./components/About/About";
 import Hero from "./components/Hero/Hero";
 import Navbar from "./components/Navbar/Navbar";
 
@@ -9,7 +10,7 @@ function App() {
       <div className="container">
         <Navbar />
         <Hero />
-        {/* <About /> */}
+        <About />
         {/* <Projects /> */}
         {/* <Contact /> */}
       </div>
