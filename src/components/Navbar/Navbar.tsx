@@ -17,7 +17,7 @@ const Navbar = () => {
             <a href={link.href}>
               {link.title}
               {" "}
-              {link.icon && <span className={styles.icon}>{link.icon}</span>}
+              {link.icon && <span>{link.icon}</span>}
             </a>
           </li>
         ))}
