@@ -1,43 +1,60 @@
+import { useEffect, useState } from "react";
 import styles from "./About.module.scss";
-import useAnimateUponView from "../../hooks/useAnimateUponView";
-import DescriptionComponent from "./DescriptionComponent/DescriptionComponent";
-import { ErrorBoundary } from "react-error-boundary";
-import Fallback from "../Fallback/Fallback";
+import fetchDataFromCMS from "../../utils/fetchDataFromCMS";
+
+type TextChild = {
+  type: "text";
+  text: string;
+  bold?: boolean;
+}
+
+type Paragraph = {
+  type: "paragraph";
+  children: TextChild[];
+}
+
+// takes in response, returns JSX
+const parseResponse = (description: Paragraph[]): JSX.Element[] => {
+  return description.map((block: Paragraph, index: number) => (
+    <p key={index}>
+      {
+        block.children.map((child: TextChild, childIndex: number) => {
+          if (child.bold) {
+            return <strong key={childIndex}> {child.text} </strong>
+          }
+          return <span key={childIndex}> {child.text} </span>
+        })
+      }
+    </p>
+  ));
+}
 
 const About = () => {
-  // animate lines once they are in view
-  useAnimateUponView(styles["header-line"], styles["animation"]);
 
+  const [description, setDescription] = useState<Paragraph[]>([]);
+
+  // step 1: fetch data from CMS
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetchDataFromCMS("/api/about");
+        const parsed: Paragraph[] = response.data.attributes.description;
+        setDescription(parsed);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // step 2: parse response and render
   return (
     <div className={styles["container"]}>
-      {/* header */}
-      <div className={styles["header"]}>
-        <h3 className={styles["header-number"]}>01.</h3>
-        <h3 className={styles["header-title"]} id="about">
-          about me
-        </h3>
-        <div className={styles["header-line"]}></div>
-      </div>
-
-      {/* content */}
-      <div className={styles["content"]}>
-        {/* text */}
-        <div className={styles["text"]}>
-          <ErrorBoundary fallback={<Fallback />}>
-            <DescriptionComponent />
-          </ErrorBoundary>
-        </div>
-
-        {/* space */}
-        <div className={styles["space"]}></div>
-
-        {/* image */}
-        <div className={styles["image"]}>
-          <div className={styles["image-wrapper"]}>
-            <img src="profile_image.jpg" alt="Profile Image" />
-          </div>
-        </div>
-      </div>
+      {description ? (
+        parseResponse(description)
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

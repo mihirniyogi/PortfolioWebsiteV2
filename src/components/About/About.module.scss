@@ -1,105 +1,24 @@
+@import "../../index.scss";
+
 .container {
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
-  // border: 1px solid white;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  .header-number {
-    font-family: "Fira Code", sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--faded-golden);
-    margin: 0;
-    // border: 1px solid red;
-  }
-
-  .header-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--cream);
-    margin: 0 0 0 10px;
-    white-space: nowrap;
-    // border: 1px solid red;
-  }
-
-  .header-line {
-    margin: 0 0 0 20px;
-    height: 3px;
-    width: 100%;
-    background-color: var(--faded-golden);
-    border-radius: 20px;
-    transform: scaleX(0);
-  }
-
-  @keyframes expand {
-    from {
-      transform: scaleX(0);
-      transform-origin: left;
-    }
-    to {
-      transform: scaleX(1);
-    }
-  }
-
-  .header-line.animation {
-    animation: expand 1.2s forwards;
-    animation-delay: 0.25s;
-  }
-}
-
-.content {
-  // border: 1px solid yellowgreen;
-  display: flex;
-  flex-direction: row;
+  border: 2px solid black;
+  padding: 1rem;
+  box-shadow: 4px 4px 0px black;
   margin-top: 2rem;
+  background: #ECE2D0;
 
-  .text {
-    width: 70%;
+  p {
+    font-family: 'Fira Code', monospace;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--faded-black);
+    margin: 0;
 
-    .highlight {
-      color: var(--faded-golden);
-      // text-decoration: underline;
-      font-weight: 700;
-    }
-  }
-
-  .space {
-    width: 5%;
-    // border: 1px solid red;
-  }
-
-  .image {
-    display: flex;
-    width: 25%;
-    // border: 1px solid yellowgreen;
-    justify-content: center;
-    align-items: center;
-
-    .image-wrapper {
-      // border: 1px solid red;
-      width: 100%; /* Responsive width based on viewport width */
-      max-width: 350px; /* Maximum size for larger screens */
-      aspect-ratio: 1;
-      border-radius: 50%;
-      overflow: hidden;
-      position: relative;
-
-      img {
-        width: 200%;
-        height: 200%;
-        object-fit: cover;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-55%, -35%);
-      }
+    strong {
+      font-weight: 600;
+      color: var(--faded-black);
     }
   }
 }

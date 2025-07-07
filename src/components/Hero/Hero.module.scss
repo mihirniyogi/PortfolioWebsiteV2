@@ -1,30 +1,52 @@
+@import "../../index.scss";
+
 .container {
   display: flex;
   flex-direction: column;
   margin-top: 5rem;
-  // border: 1px solid white;
+
+  @include respond("md") {
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+  }
 
   p {
-    font-family: "Fira Code", sans-serif;
-    font-size: 2rem;
+    font-family: "Fira Code", monospace;
+    font-size: 1.2rem;
     font-weight: 400;
-    color: var(--faded-golden);
+    color: var(--faded-black);
     margin: 0;
   }
 
   h1 {
-    font-family: "Poppins", sans-serif;
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--cream);
+    font-family: "Fira Code", monospace;
+    font-size: 2.7rem;
+    font-weight: 600;
+    color: var(--faded-black);
     margin: 0;
   }
 
-  h2 {
-    font-family: "Poppins", sans-serif;
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: var(--cream);
-    margin: 0;
+  .imageWrapper {
+    width: 10rem;
+    height: 10rem;
+    border: 2px solid black;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 4px 4px 0px black;
+    margin-top: 2rem;
+    @include respond("md") {
+      margin-top: 0;
+    }
+  }
+
+  img {
+    width: 200%;
+    height: 200%;
+    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-55%, -35%);
   }
 }
