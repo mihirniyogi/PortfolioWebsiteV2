@@ -1,38 +1,66 @@
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import styles from "./Projects.module.scss";
+import fetchDataFromCMS from "../../utils/fetchDataFromCMS";
+
+type ResponseFormat = {
+  data: {
+    attributes: {
+      Title: string;
+      Description: string;
+      image?: {
+        data?: {
+          attributes?: {
+            url?: string;
+          }
+        }
+      };
+      technologies: string[];
+      githubLink?: string;
+      liveLink?: string;
+    }
+  }[];
+}
 
 type Project = {
   title: string;
   desc: string;
+  image: string;
   technologies: string[];
   githubLink?: string;
   liveLink?: string;
 }
 
-const projects: Project[] = [
-  {
-    title: "Project 1",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    technologies: ["React", "Next.js", "Firebase", "Typescript"],
-    githubLink: "google.com",
-    liveLink: "google.com"
-  },
-  {
-    title: "Project 2",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    technologies: ["Java", "Android Studio", "XML"],
-    githubLink: "google.com"
-  },
-  {
-    title: "Project 3",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
-    technologies: ["Google Sheets", "Apps Script", "Python"],
-    githubLink: "google.com",
-    liveLink: "google.com"
-  },
-]
-
 const Projects = () => {
+
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+
+      try {
+        const response = await fetchDataFromCMS("/api/projects?populate=*") as ResponseFormat;
+        const BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
+        const projects: Project[] = response.data.map((item) => ({
+          title: item.attributes["Title"],
+          desc: item.attributes["Description"],
+          image: item.attributes["image"]?.data?.attributes?.url
+            ? `${BASE_URL}${item.attributes["image"].data.attributes.url}`
+            : '',
+          technologies: item.attributes["technologies"],
+          githubLink: item.attributes["githubLink"],
+          liveLink: item.attributes["liveLink"],
+        }));
+        console.log("Projects fetched:", projects);
+        setProjects(projects);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+        setProjects([]);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -44,6 +72,7 @@ const Projects = () => {
             key={index}
             title={project.title}
             desc={project.desc}
+            image={project.image}
             technologies={project.technologies}
             githubLink={project.githubLink}
             liveLink={project.liveLink}

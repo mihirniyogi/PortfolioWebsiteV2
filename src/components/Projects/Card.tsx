@@ -6,16 +6,18 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 type CardProps = {
   title: string;
   desc: string;
+  image?: string;
   technologies: string[];
   githubLink?: string;
   liveLink?: string;
 }
 
-const Card = ({ title, desc, technologies, githubLink, liveLink }: CardProps) => {
+const Card = ({ title, desc, image, technologies, githubLink, liveLink }: CardProps) => {
+
   return (
     <div className={styles.container}>
       <div className={styles.imageWrapper}>
-        {/* image to be placed */}
+        <img src={image} alt={"Project Image"} />
       </div>
 
       <h3>{title}</h3>
