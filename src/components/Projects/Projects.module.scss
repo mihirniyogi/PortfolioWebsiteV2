@@ -1,36 +1,84 @@
-@import "../../index.scss";
-
 .container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom: 5rem;
+  margin-top: 2rem;
+}
 
-  h2 {
-    font-size: 1.2rem;
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .header-number {
+    font-family: "Fira Code", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--faded-golden);
+    margin: 0;
+    // border: 1px solid red;
+  }
+
+  .header-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
     font-weight: 600;
-    font-family: "Fira Code", monospace;
-    color: var(--faded-black);
-    padding: 0.5rem 1rem;
-    background-color: var(--sun-yellow);
-    border: 2px solid black;
-    box-shadow: 4px 4px 0px black;
-    margin-top: 3rem;
-    text-align: center;
+    color: var(--cream);
+    margin: 0 0 0 10px;
+    white-space: nowrap;
+    // border: 1px solid red;
+  }
 
-    @include respond("md") {
-      width: fit-content;
+  .header-line-left,
+  .header-line-right {
+    margin: 0 0 0 0;
+    height: 3px;
+    width: 100%;
+    background-color: var(--faded-golden);
+    border-radius: 20px;
+    transform: scaleX(0); // Hide initially
+  }
+
+  .header-line-left {
+    margin-right: 20px;
+  }
+
+  .header-line-right {
+    margin-left: 20px;
+  }
+
+  @keyframes expandLeft {
+    from {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    to {
+      transform: scaleX(1);
     }
   }
 
-  .cardsSection {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-
-    @include respond("md") {
-      flex-direction: row;
+  @keyframes expandRight {
+    from {
+      transform: scaleX(0);
+      transform-origin: right;
     }
-
+    to {
+      transform: scaleX(1);
+    }
   }
+
+  .header-line-left.animation {
+    animation: expandLeft 1.2s forwards;
+    animation-delay: 0.25s;
+  }
+  .header-line-right.animation {
+    animation: expandRight 1.2s forwards;
+    animation-delay: 0.25s;
+  }
+}
+
+.content {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
 }

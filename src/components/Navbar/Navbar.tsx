@@ -1,27 +1,33 @@
 import styles from "./Navbar.module.scss";
-import { FaExternalLinkAlt } from "react-icons/fa";
 
 const navLinks = [
-  { title: "Projects", href: "#projects" },
-  { title: "Experience", href: "#experience" },
-  { title: "Contact", href: "#contact" },
-  { title: "Resume", href: "#resume", icon: <FaExternalLinkAlt /> },
+  {
+    title: "about",
+    href: "#about",
+  },
+  {
+    title: "projects",
+    href: "#projects",
+  },
+  {
+    title: "contact",
+    href: "#contact",
+  },
 ];
 
 const Navbar = () => {
   return (
     <nav className={styles.navbar}>
-      <ul className={styles.navLinks}>
+      <ul>
         {navLinks.map((link) => (
           <li key={link.title}>
-            <a href={link.href}>
-              {link.title}
-              {" "}
-              {link.icon && <span>{link.icon}</span>}
-            </a>
+            <a href={link.href}>{link.title}</a>
           </li>
         ))}
       </ul>
+      <a className={styles.btn} href="">
+        resume
+      </a>
     </nav>
   );
 };
